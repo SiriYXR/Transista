@@ -1,5 +1,9 @@
 # Transista
- 基于Pythonista的论文阅读翻译工具
+&emsp;&emsp;—— 基于Pythonista的iPad论文阅读翻译工具。
+
+&emsp;&emsp;[GitHub项目地址](https://github.com/SiriYXR/AppWishList)
+
+&emsp;&emsp;[详细使用文档与项目介绍](https://blog.siriyang.cn/posts/20210124124556id.html)
 
 ## 快速安装
 
@@ -8,3 +12,11 @@
 ```python
 import requests as r;exec(r.get('http://img.siriyang.cn/source/Transista/installer.py').content)
 ```
+
+## 快速开始
+
+&emsp;&emsp;首先需要注册申请[百度翻译API账](https://fanyi-api.baidu.com/)号，[申请教程](https://blog.siriyang.cn/posts/20201013145557id.html)。
+
+&emsp;&emsp;然后在`data/config.ini`中对应位置填上自己的`appid`和`key`。
+
+&emsp;&emsp;然后运行文件夹下的`LunchMainWindow.py`即可。
