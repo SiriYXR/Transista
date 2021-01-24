@@ -17,7 +17,7 @@ class RecordView(ui.View):
 
 		self.name = '记录'
 		self.background_color = 'white'
-		self.frame = (0, 0, self.app.width, app.height)
+		self.frame = (0, 0, self.app.width, self.app.height)
 		self.flex = 'WHLRTB'
 
 		self.closeBtn = ui.ButtonItem()

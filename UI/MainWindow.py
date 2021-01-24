@@ -3,8 +3,8 @@
 @author: SiriYang
 @file: MainWindow.py
 @createTime: 2021-01-22 16:11:11
-@updateTime: 2021-01-23 13:22:22
-@codeLines: 152
+@updateTime: 2021-01-23 19:12:15
+@codeLines: 164
 """
 
 import ui
@@ -55,7 +55,10 @@ class MainWindow(ui.View):
 		self.settingDeep = 0
 		
 		self.isLestenningClipbord = self.configService.GetIsLestenningClipbord()
-		self.lesteningStatus = self.LESTENNING
+		if self.isLestenningClipbord :
+			self.lesteningStatus = self.LESTENNING
+		else:
+			self.lesteningStatus = self.PAUSE
 		
 		# 状态指示器
 		self.activity_indicator = ui.ActivityIndicator(flex='LTRB')
@@ -66,6 +69,7 @@ class MainWindow(ui.View):
 		self.translateView = TranslateView(self)
 		self.recordView = RecordView(self)
 		self.settingView = SettingView(self)
+		
 		self.translateNavi = ui.NavigationView(self.translateView)
 		self.recordNavi = ui.NavigationView(self.recordView)
 		self.settingNavi = ui.NavigationView(self.settingView)

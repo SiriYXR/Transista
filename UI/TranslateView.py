@@ -3,8 +3,8 @@
 @author: SiriYang
 @file: TranslateView.py
 @createTime: 2021-01-22 17:59:04
-@updateTime: 2021-01-23 17:09:09
-@codeLines: 120
+@updateTime: 2021-01-23 19:12:01
+@codeLines: 122
 """
 
 import ui
@@ -26,13 +26,13 @@ class TranslateView(ui.View):
 	def __init__(self, app):
 		self.app = app
 		self.transserv = TranslateService(app.rootpath)
-
+		
 		self.orgtext = ""
 		self.restext = ""
 
 		self.name = '翻译'
 		self.background_color = '#f1f1f1'
-		self.frame = (0, 0, self.app.width, app.height)
+		self.frame = (0, 0, self.app.width, self.app.height)
 		self.flex = 'WHLRTB'
 
 		self.closeBtn = ui.ButtonItem()
@@ -107,11 +107,11 @@ class TranslateView(ui.View):
 		labe_h = 30
 		labe_w = 100
 		textView_h = (self.height - labe_h * 2 - bottomView_h) / 2
-		self.orgLabel.frame = (10, 0, labe_w, labe_h)
-		self.orgTextView.frame = (0, labe_h, self.width, textView_h)
-		self.resLabel.frame = (10, self.orgTextView.y + self.orgTextView.height,
+		self.resLabel.frame = (10, 0, labe_w, labe_h)
+		self.resTextView.frame = (0, labe_h, self.width, textView_h)
+		self.orgLabel.frame = (10, self.resTextView.y + self.resTextView.height,
 																									labe_w, labe_h)
-		self.resTextView.frame = (0, self.resLabel.y + self.resLabel.height,
+		self.orgTextView.frame = (0, self.orgLabel.y + self.orgLabel.height,
 																												self.width, textView_h)
 		self.bottomView.frame = (0, self.height - bottomView_h, self.width,
 																											bottomView_h)

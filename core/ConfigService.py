@@ -3,19 +3,20 @@
 @author: SiriYang
 @file: ConfigService.py
 @createTime: 2021-01-22 21:33:45
-@updateTime: 2021-01-23 14:13:10
-@codeLines: 89
+@updateTime: 2021-01-23 19:11:48
+@codeLines: 101
 """
 
 import configparser
 
+from tools.Result import *
 
 class ConfigService(object):
 	def __init__(self, path):
 		self.path = path
 		self.conf = configparser.ConfigParser()
 
-	def ResetInit(self):
+	def Reset(self):
 		self.conf.read(self.path, encoding='utf-8')
 
 		self.conf['system']['runtimes'] = self.conf['default']['runtimes']
@@ -33,7 +34,14 @@ class ConfigService(object):
 
 		with open(self.path, 'w', encoding='utf-8') as fp:
 			self.conf.write(fp)
+	
+	def GetRunTimes(self):
+		self.conf.read(self.path, encoding='utf-8')
 
+		runtimes = self.conf.getint('system', 'runtimes')
+		
+		return runtimes
+	
 	def GetEngine(self):
 		self.conf.read(self.path, encoding='utf-8')
 
@@ -167,6 +175,5 @@ class ConfigService(object):
 
 if __name__ == "__main__":
 	conf = ConfigService("../data/config.ini")
-	conf.SetEngineBaiduCommon()
 	print(conf.Content())
 	

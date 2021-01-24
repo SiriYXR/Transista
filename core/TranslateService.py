@@ -3,7 +3,7 @@
 @author: SiriYang
 @file: TranslateService.py
 @createTime: 2021-01-23 13:29:09
-@updateTime: 2021-01-23 16:20:13
+@updateTime: 2021-01-23 19:11:56
 @codeLines: 91
 """
 
@@ -21,10 +21,10 @@ from tools.Result import *
 class TranslateService(object):
 	def __init__(self, rootpath):
 		self.rootpath = rootpath
-		self.configserv = ConfigService(rootpath + "config.ini")
+		self.configService = ConfigService(rootpath + "config.ini")
 
 	def Translate(self, orgtext):
-		engine = self.configserv.GetEngine()
+		engine = self.configService.GetEngine()
 
 		if engine == "baidu_common":
 			restext = self.BaiduCommonAPI(orgtext)
@@ -35,11 +35,11 @@ class TranslateService(object):
 		return restext
 
 	def BaiduCommonAPI(self, orgtext):
-		appid = self.configserv.GetBaiduAppID()  # 接口appid
-		secretKey = self.configserv.GetBaiduKey()  # 接口密钥
+		appid = self.configService.GetBaiduAppID()  # 接口appid
+		secretKey = self.configService.GetBaiduKey()  # 接口密钥
 
 		httpClient = None
-		myurl = self.configserv.GetBaiduCommonAPI()
+		myurl = self.configService.GetBaiduCommonAPI()
 
 		fromLang = 'auto'  #原文语种
 		toLang = 'zh'  #译文语种
@@ -80,17 +80,17 @@ class TranslateService(object):
 			return Result(ResultEnum.SUCCESS, restext)
 
 	def BaiduFieldAPI(self, orgtext):
-		appid = self.configserv.GetBaiduAppID()  # 接口appid
-		secretKey = self.configserv.GetBaiduKey()  # 接口密钥
+		appid = self.configService.GetBaiduAppID()  # 接口appid
+		secretKey = self.configService.GetBaiduKey()  # 接口密钥
 
 		httpClient = None
-		myurl = self.configserv.GetBaiduFieldAPI()
+		myurl = self.configService.GetBaiduFieldAPI()
 
 		fromLang = 'auto'  # 原语言
 		toLang = 'zh'  # 目标语言
 		salt = random.randint(32768, 65536)
 		q = orgtext  # 原文
-		domain = self.configserv.GetBaiduDomain()
+		domain = self.configService.GetBaiduDomain()
 		sign = appid + q + str(salt) + domain + secretKey
 		sign = hashlib.md5(sign.encode()).hexdigest()
 		myurl = myurl + '?appid=' + appid + '&q=' + urllib.parse.quote(

@@ -13,9 +13,10 @@ import os
 import zipfile
 import time
 
-FILE='IstaTranslator_ea.zip'
-#URL_BASE='https://raw.githubusercontent.com/SiriYXR/AppWishList/master/archive/'
-URL_BASE='http://img.siriyang.cn/source/IstaTranslator/archive/'
+APPNAME='Transista'
+VERSION="v-0-1-0"
+FILE=APPNAME+'_'+VERSION+'.zip'
+URL_BASE='http://img.siriyang.cn/source/Transista/archive/'
 BASE_DIR=os.path.expanduser('~')
 DEFAULT_INSTALL_DIR=os.path.join(BASE_DIR,'Documents/')
 
@@ -75,7 +76,7 @@ def main():
 	
 	print('正在安装 ...')
 	
-	install_path=DEFAULT_INSTALL_DIR+'IstaTranslator/'
+	install_path=DEFAULT_INSTALL_DIR+APPNAME+'/'
 	zip_file=zipfile.ZipFile(zip_path)
 	unzip_into(zip_path,install_path)
 	os.remove(zip_path)
