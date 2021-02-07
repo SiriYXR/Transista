@@ -3,8 +3,8 @@
 @author:SiriYang
 @file: Result.py
 @time: 2019.12.25 12:43
-@updateTime: 2021-01-23 16:20:37
-@codeLines: 42
+@updateTime: 2021-02-06 20:28:06
+@codeLines: 46
 """
 
 
@@ -20,6 +20,8 @@ class ResultEnum(object):
 
 	# 翻译服务
 	TRANSLATE_ERROR = (101, "翻译出错!")
+	BAIDUAPPID_VOID = (111, "百度appID为空!")
+	BAIDUKEY_VOID = (113, "百度Key为空!")
 
 	# 网络
 	URL_INVALID = (401, "这不是一个有效链接！")
@@ -39,8 +41,10 @@ class Result(object):
 
 	def __init__(self, resultEnum, data=None):
 		self.mCode = resultEnum[0]
-		self.mInfo = resultEnum[1]
+		self.mInfo = resultEnum[1]			
 		self.mData = data
+		if data == None:
+			self.mData = resultEnum[1]
 
 	def __del__(self):
 		pass

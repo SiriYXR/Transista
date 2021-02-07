@@ -3,12 +3,17 @@
 @author: SiriYang
 @file: MainWindow.py
 @createTime: 2021-01-22 16:11:11
-@updateTime: 2021-01-23 19:12:15
-@codeLines: 164
+@updateTime: 2021-02-07 18:25:17
+@codeLines: 182
 """
 
 import ui
 import console
+import logging
+logging.basicConfig(
+	level=logging.INFO,
+	datefmt="%Y-%m-%d %H:%M:%S",
+	format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 from .TranslateView import TranslateView
 from .RecordView import RecordView
@@ -31,12 +36,11 @@ class MainWindow(ui.View):
 	TRANSLATE = 0
 	RECORD = 1
 	SETTING = 3
-	
+
 	# 剪贴板监听
-	LESTENNING=0
-	PAUSE=1
-	STOP=2
-			
+	LESTENNING = 0
+	STOP = 1
+
 	# 按钮颜色
 	BTN_ON_COLOR = '#27a2f1'
 	BTN_OFF_COLOR = '#8e8e8e'
@@ -45,9 +49,12 @@ class MainWindow(ui.View):
 		self.name = 'IstaTranslator'
 		self.rootpath = rootpath
 		self.configService = ConfigService(rootpath + "config.ini")
+		self.logger = logging.getLogger(self.__class__.__name__)
 
 		self.orientation = self.LANDSCAPE
 		self.test_mod = test_mod
+
+		self.trans_history=[]
 
 		self.viewKind = self.TRANSLATE
 		self.translateDeep = 0
@@ -55,11 +62,11 @@ class MainWindow(ui.View):
 		self.settingDeep = 0
 		
 		self.isLestenningClipbord = self.configService.GetIsLestenningClipbord()
-		if self.isLestenningClipbord :
+		if self.isLestenningClipbord:
 			self.lesteningStatus = self.LESTENNING
 		else:
 			self.lesteningStatus = self.PAUSE
-		
+
 		# 状态指示器
 		self.activity_indicator = ui.ActivityIndicator(flex='LTRB')
 		self.activity_indicator.center = self.center
@@ -69,7 +76,7 @@ class MainWindow(ui.View):
 		self.translateView = TranslateView(self)
 		self.recordView = RecordView(self)
 		self.settingView = SettingView(self)
-		
+
 		self.translateNavi = ui.NavigationView(self.translateView)
 		self.recordNavi = ui.NavigationView(self.recordView)
 		self.settingNavi = ui.NavigationView(self.settingView)
@@ -139,21 +146,23 @@ class MainWindow(ui.View):
 		self.settingBtn.frame = (btn_margin * 3 + btn_w * 2, 0, btn_w, bottomView_h)
 
 	def launch(self):
+		self.logger.info("启动程序")
 		if self.test_mod == self.NORMAL:
 			self.present(style='fullscreen', hide_title_bar=True)
 		else:
 			self.present(style='sheet', hide_title_bar=True)
 		self.configService.RunTimesAddOne()
+		self.configService.UpdateTransChartStatistic()
 
 	def TranslateAct(self, sender):
 		if self.viewKind == self.TRANSLATE:
 			return
 		self.activity_indicator.start()
-		if self.isLestenningClipbord :
+		if self.isLestenningClipbord:
 			self.lesteningStatus = self.LESTENNING
 		else:
-			self.lesteningStatus = self.PAUSE
-			
+			self.lesteningStatus = self.STOP
+
 		try:
 			self.translateView.updateData()
 			self.translateNavi.hidden = False
@@ -165,6 +174,7 @@ class MainWindow(ui.View):
 				self.settingNavi.pop_view()
 		except Exception as e:
 			console.hud_alert('翻译页面加载失败！', 'error', 1.0)
+			self.logger.fatal("翻译页面加载失败！")
 		finally:
 			self.viewKind = self.TRANSLATE
 			self.translateBtn.tint_color = self.BTN_ON_COLOR
@@ -172,11 +182,13 @@ class MainWindow(ui.View):
 			self.settingBtn.tint_color = self.BTN_OFF_COLOR
 			self.activity_indicator.stop()
 
+		self.logger.info("切换到翻译页面")
+
 	def RecordAct(self, sender):
 		if self.viewKind == self.RECORD:
 			return
 		self.activity_indicator.start()
-		self.lesteningStatus = self.PAUSE
+		self.lesteningStatus = self.STOP
 		try:
 			self.recordView.updateData()
 			self.translateNavi.hidden = True
@@ -188,6 +200,7 @@ class MainWindow(ui.View):
 				self.settingNavi.pop_view()
 		except Exception as e:
 			console.hud_alert('记录页面加载失败！', 'error', 1.0)
+			self.logger.fatal("记录页面加载失败！")
 		finally:
 			self.viewKind = self.RECORD
 			self.translateBtn.tint_color = self.BTN_OFF_COLOR
@@ -195,11 +208,13 @@ class MainWindow(ui.View):
 			self.settingBtn.tint_color = self.BTN_OFF_COLOR
 			self.activity_indicator.stop()
 
+		self.logger.info("切换到记录页面")
+
 	def SettingAct(self, sender):
 		if self.viewKind == self.SETTING:
 			return
 		self.activity_indicator.start()
-		self.lesteningStatus = self.PAUSE
+		self.lesteningStatus = self.STOP
 		try:
 			self.settingView.updateData()
 			self.translateNavi.hidden = True
@@ -211,6 +226,7 @@ class MainWindow(ui.View):
 				self.settingNavi.pop_view()
 		except Exception as e:
 			console.hud_alert('设置页面加载失败！', 'error', 1.0)
+			self.logger.fatal("设置页面加载失败！")
 		finally:
 			self.viewKind = self.SETTING
 			self.translateBtn.tint_color = self.BTN_OFF_COLOR
@@ -218,7 +234,10 @@ class MainWindow(ui.View):
 			self.settingBtn.tint_color = self.BTN_ON_COLOR
 			self.activity_indicator.stop()
 
+		self.logger.info("切换到设置页面")
+
 	def CloseAct(self, sender):
 		self.lesteningStatus = self.STOP
 		self.close()
+		self.logger.info("程序关闭")
 

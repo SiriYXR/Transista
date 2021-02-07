@@ -17,6 +17,6 @@ import requests as r;exec(r.get('http://img.siriyang.cn/source/Transista/install
 
 &emsp;&emsp;首先需要注册申请[百度翻译API账](https://fanyi-api.baidu.com/)号，[申请教程](https://blog.siriyang.cn/posts/20201013145557id.html)。
 
-&emsp;&emsp;然后在`data/config.ini`中对应位置填上自己的`appid`和`key`。
+&emsp;&emsp;然后在`设置/百度翻译接口`中对应位置填上自己的`appid`和`key`。
 
 &emsp;&emsp;然后运行文件夹下的`LunchMainWindow.py`即可。

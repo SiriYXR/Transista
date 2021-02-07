@@ -15,4 +15,3 @@ from UI.MainWindow import MainWindow
 if __name__ == '__main__':
 	mainWindow = MainWindow("./data/")
 	mainWindow.launch()
-	
