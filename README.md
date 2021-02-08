@@ -25,7 +25,7 @@ import requests as r;exec(r.get('http://img.siriyang.cn/source/Transista/install
 
 ## 更新日志
 
-### 2020.02.06 v1.0.1
+### 2021.02.08 v1.0.1
 * 修复BUG
 * 将粘贴按钮的操作由直接替换原文改为追加粘贴内容
 
