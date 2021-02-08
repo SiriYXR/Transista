@@ -518,7 +518,7 @@ class SettingView(ui.View):
 		self.copyrightLabel.frame = (
 			0, self.info_tableView.y + self.info_tableView.height + 30, self.width, 20)
 		self.copyrightLabel.alignment = ui.ALIGN_CENTER
-		self.copyrightLabel.text = "Copyright © 2021 by SiriYang v1.0"
+		self.copyrightLabel.text = "Copyright © 2021 by SiriYang v1.0.1"
 		self.copyrightLabel.font = ("<System>", 15)
 		self.copyrightLabel.text_color = self.FONTCOLOR_PASTAL
 

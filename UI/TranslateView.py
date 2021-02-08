@@ -3,7 +3,7 @@
 @author: SiriYang
 @file: TranslateView.py
 @createTime: 2021-01-22 17:59:04
-@updateTime: 2021-02-07 14:43:18
+@updateTime: 2021-02-08 11:30:12
 @codeLines: 188
 """
 
@@ -205,8 +205,8 @@ class TranslateView(ui.View):
 		text = clipboard.get()
 		if len(text) > 0:
 			clipboard.set("")
-			self.orgTextView.text = text
-			self.orgtext = text
+			self.orgTextView.text += " "+text
+			self.orgtext = self.orgTextView.text
 			self.resTextView.text = ""
 			self.transtimeLabel.text = ""
 			self.orgTextView.delegate.textview_did_change(self.orgTextView)

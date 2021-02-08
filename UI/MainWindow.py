@@ -65,7 +65,7 @@ class MainWindow(ui.View):
 		if self.isLestenningClipbord:
 			self.lesteningStatus = self.LESTENNING
 		else:
-			self.lesteningStatus = self.PAUSE
+			self.lesteningStatus = self.STOP
 
 		# 状态指示器
 		self.activity_indicator = ui.ActivityIndicator(flex='LTRB')
