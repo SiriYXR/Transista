@@ -1,12 +1,3 @@
-# -*- coding:utf-8 -*-
-"""
-@author: SiriYang
-@file: README.md
-@createTime: 2021-02-08 12:01:29
-@updateTime: 2021-02-08 12:01:29
-@codeLines: 22
-"""
-
 # Transista
 &emsp;&emsp;—— 基于Pythonista的iPad论文阅读翻译工具。
 
