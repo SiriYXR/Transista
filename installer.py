@@ -3,7 +3,7 @@
 @author: SiriYang
 @file: installer.py
 @createTime: 2020-04-05 20:03:25
-@updateTime: 2021-02-08 11:41:36
+@updateTime: 2021-02-09 17:27:01
 @codeLines: 61
 """
 
@@ -14,7 +14,7 @@ import zipfile
 import time
 
 APPNAME='Transista'
-VERSION="v-1-0-1"
+VERSION="v-1-0-2"
 FILE=APPNAME+'_'+VERSION+'.zip'
 URL_BASE='http://img.siriyang.cn/source/Transista/archive/'
 BASE_DIR=os.path.expanduser('~')

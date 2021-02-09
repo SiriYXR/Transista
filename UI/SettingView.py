@@ -3,8 +3,8 @@
 @author: SiriYang
 @file: SettingView.py
 @createTime: 2021-01-22 18:12:10
-@updateTime: 2021-02-07 19:45:03
-@codeLines: 316
+@updateTime: 2021-02-09 12:44:41
+@codeLines: 330
 """
 
 import ui
@@ -87,15 +87,45 @@ class SystemSettingDataSource(object):
 		cell.detail_text_label.text = self.data[row]["detail"]
 		cell.detail_text_label.text_color = self.father.FONTCOLOR_PASTAL
 		cell.accessory_type = self.data[row]["accessory_type"]
+		
+		self.loadCellItem(cell,row)
+		
 		return cell
+		
+	def loadCellItem(self,cell,row):
+		
+		title = self.data[row]["title"]
+		
+		if (title == "切换翻译引擎"):
+			engineLabel=ui.Label()
+			engineLabel.text=self.father.engineDic[self.father.setting_engine]
+			engineLabel.font=("<System>", 16)
+			engineLabel.text_color=self.father.FONTCOLOR_PASTAL
+			engineLabel.alignment=ui.ALIGN_RIGHT
+			engineLabel.frame=(self.father.width-180,10,150,30)
+			cell.content_view.add_subview(engineLabel)
+		
 
 	def tableview_did_select(self, tableview, section, row):
 		title = self.data[row]["title"]
 		try:
 			if (title == "切换翻译引擎"):
-				self.father.SetEngineAct(None)
+				self.SetEngineAct(None)
 		except Exception as e:
 			console.hud_alert('系统设置失败！', 'error', 1.0)
+		finally:
+			pass
+			
+	@ui.in_background
+	def SetEngineAct(self, sender):
+
+		try:
+			index = console.alert("翻译引擎", "选择翻译时使用的引擎", "百度通用翻译", "百度领域翻译")
+			self.father.setting_engine = list(self.father.engineDic.keys())[index - 1]
+			self.app.configService.SetEngine(self.father.setting_engine)
+			self.father.setting_tableView.reload()
+		except Exception as e:
+			pass
 		finally:
 			pass
 
@@ -335,10 +365,8 @@ class SettingView(ui.View):
 		self.settingDataSource = SystemSettingDataSource(self.app, self)
 
 		self.setting_lestenBtn = ui.Switch()
-		self.setting_engineBtn = ui.Button()
 
 		self.setting_tableView.add_subview(self.setting_lestenBtn)
-		self.setting_tableView.add_subview(self.setting_engineBtn)
 		self.scrollView.add_subview(self.setting_titleLabel)
 		self.scrollView.add_subview(self.setting_tableView)
 
@@ -439,13 +467,6 @@ class SettingView(ui.View):
 		self.setting_lestenBtn.value = self.app.isLestenningClipbord
 		self.setting_lestenBtn.action = self.SetLestenAct
 
-		self.setting_engineBtn.frame = (self.width - 160, 60, 150, 30)
-		self.setting_engineBtn.title = self.engineDic[self.setting_engine]
-		self.setting_engineBtn.font = ("<System>", 16)
-		self.setting_engineBtn.tint_color = self.FONTCOLOR_PASTAL
-		self.setting_engineBtn.alignment = ui.ALIGN_RIGHT
-		self.setting_engineBtn.action = self.SetEngineAct
-
 		self.setting_tableView.data_source = self.settingDataSource
 		self.setting_tableView.delegate = self.settingDataSource
 		self.setting_tableView.row_height = 50
@@ -518,7 +539,7 @@ class SettingView(ui.View):
 		self.copyrightLabel.frame = (
 			0, self.info_tableView.y + self.info_tableView.height + 30, self.width, 20)
 		self.copyrightLabel.alignment = ui.ALIGN_CENTER
-		self.copyrightLabel.text = "Copyright © 2021 by SiriYang v1.0.1"
+		self.copyrightLabel.text = "Copyright © 2021 by SiriYang v1.0.2"
 		self.copyrightLabel.font = ("<System>", 15)
 		self.copyrightLabel.text_color = self.FONTCOLOR_PASTAL
 
@@ -535,17 +556,4 @@ class SettingView(ui.View):
 	
 	def SetBaiduTerminologyAct(self,sender):
 		self.app.configService.SetBaiduTerminology(self.baiduapi_terminologyBtn.value)
-	
-	@ui.in_background
-	def SetEngineAct(self, sender):
-
-		try:
-			index = console.alert("翻译引擎", "选择翻译时使用的引擎", "百度通用翻译", "百度领域翻译")
-			self.setting_engineBtn.title = list(self.engineDic.values())[index - 1]
-			self.setting_engine = list(self.engineDic.keys())[index - 1]
-			self.app.configService.SetEngine(self.setting_engine)
-		except Exception as e:
-			pass
-		finally:
-			pass
 

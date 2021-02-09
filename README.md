@@ -1,3 +1,12 @@
+# -*- coding:utf-8 -*-
+"""
+@author: SiriYang
+@file: README.md
+@createTime: 2021-02-08 12:01:29
+@updateTime: 2021-02-08 12:01:29
+@codeLines: 22
+"""
+
 # Transista
 &emsp;&emsp;—— 基于Pythonista的iPad论文阅读翻译工具。
 
@@ -24,6 +33,10 @@ import requests as r;exec(r.get('http://img.siriyang.cn/source/Transista/install
 ---
 
 ## 更新日志
+
+### 2021.02.09 v1.0.2
+* 修复百度翻译接口用量统计BUG
+* 优化代码
 
 ### 2021.02.08 v1.0.1
 * 修复BUG

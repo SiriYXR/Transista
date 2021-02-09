@@ -3,7 +3,7 @@
 @author: SiriYang
 @file: ConfigService.py
 @createTime: 2021-01-22 21:33:45
-@updateTime: 2021-02-07 19:03:52
+@updateTime: 2021-02-09 12:13:34
 @codeLines: 247
 """
 
@@ -342,8 +342,8 @@ class ConfigService(object):
 		res.append(self.conf.getint('baidu_api','common_trans_cahrt_sum')+v)
 
 		self.conf['baidu_api']['common_trans_cahrt_today'] = str(res[0])
-		self.conf['baidu_api']['common_trans_cahrt_month'] = str(res[0])
-		self.conf['baidu_api']['common_trans_cahrt_sum'] = str(res[0])
+		self.conf['baidu_api']['common_trans_cahrt_month'] = str(res[1])
+		self.conf['baidu_api']['common_trans_cahrt_sum'] = str(res[2])
 
 		with open(self.path, 'w', encoding='utf-8') as fp:
 			self.conf.write(fp)
@@ -371,8 +371,8 @@ class ConfigService(object):
 		res.append(self.conf.getint('baidu_api','field_trans_cahrt_sum')+v)
 
 		self.conf['baidu_api']['field_trans_cahrt_today'] = str(res[0])
-		self.conf['baidu_api']['field_trans_cahrt_month'] = str(res[0])
-		self.conf['baidu_api']['field_trans_cahrt_sum'] = str(res[0])
+		self.conf['baidu_api']['field_trans_cahrt_month'] = str(res[1])
+		self.conf['baidu_api']['field_trans_cahrt_sum'] = str(res[2])
 
 		with open(self.path, 'w', encoding='utf-8') as fp:
 			self.conf.write(fp)
